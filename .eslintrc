@@ -1,0 +1,25 @@
+{
+  "root": true,
+  "extends": ["google", "eslint:recommended", "plugin:react/recommended" ],
+  "plugins": [ "react" ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2021,
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    }
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "linebreak-style": 0,
+    "react/prop-types": "off",
+    "camelcase": "off"
+  }
+}
