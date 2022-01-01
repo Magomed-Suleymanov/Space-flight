@@ -10,7 +10,7 @@
     "dev": "concurrently \"yarn run server\" \"yarn run start\"",
     "server": "json-server -w fakeServer/db.json -p 3001",
     "prettify": "prettier --write ./src",
-    "heroku-prebuild": "yarn install --dev"
+    "heroku-prebuild": "yarn install -D"
   },
   "author": "Muhammad Suleymanov",
   "license": "MIT",
