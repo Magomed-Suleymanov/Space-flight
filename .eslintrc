@@ -1,7 +1,7 @@
 {
   "root": true,
   "extends": ["google", "eslint:recommended", "plugin:react/recommended" ],
-  "plugins": [ "react" ],
+  "plugins": [ "react", "react-hooks" ],
   "env": {
     "es6": true,
     "browser": true,
@@ -17,8 +17,12 @@
     }
   },
   "rules": {
-    "comma-dangle": "off",
-    "linebreak-style": 0,
+    "indent": ["error", 2],
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "comma-dangle": ["error", "always-multiline"],
+    "object-curly-spacing": ["error", "always"],
+    "linebreak-style": 2,
     "react/prop-types": "off",
     "camelcase": "off"
   }
