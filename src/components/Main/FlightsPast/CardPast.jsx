@@ -1,36 +1,40 @@
 import React from 'react';
 import {
+  Box,
   Button,
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const CardPast = ({ item }) => {
+  const details =
+    item.details?.length === undefined ? (
+      <span>Don`t information</span>
+    ) : (
+      item.details?.substring(0, 50)
+    );
+
   return (
-    <div>
+    <Box>
       <Card sx={{ width: 220, margin: '10px 0' }}>
-        <CardMedia
-          component="img"
-          height="220"
-          image={item.links.patch.small}
-          alt="green iguana"
-        />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {item.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {item.details?.substring(0, 50)}...
+            Details: {details}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">More</Button>
+          <Link style={{ textDecoration: 'none' }} to={`info/${item.id}`}>
+            <Button size="small">More</Button>
+          </Link>
         </CardActions>
       </Card>
-    </div>
+    </Box>
   );
 };
 

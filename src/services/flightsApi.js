@@ -12,8 +12,14 @@ export const flightsApi = createApi({
     getUpcomingFlights: build.query({
       query: () => 'upcoming',
     }),
+    getFlightById: build.query({
+      query: (flightId) => `${flightId}`,
+    }),
   }),
 });
 
-export const { useGetPastFlightsQuery, useGetUpcomingFlightsQuery } =
-  flightsApi;
+export const {
+  useGetPastFlightsQuery,
+  useGetUpcomingFlightsQuery,
+  useGetFlightByIdQuery,
+} = flightsApi;
