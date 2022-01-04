@@ -3,7 +3,6 @@ import { Box, Button } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import { useGetFlightByIdQuery } from '../../services/flightsApi';
-import noImg from '../../assets/no_img.jpg';
 
 const InduvidualCardInfo = () => {
   const { id } = useParams();
@@ -20,7 +19,7 @@ const InduvidualCardInfo = () => {
       <img
         style={{ width: '250px' }}
         src={data?.links?.patch?.small}
-        alt="image"
+        alt="img"
       />
     );
 
