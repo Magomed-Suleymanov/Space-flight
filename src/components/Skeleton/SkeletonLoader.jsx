@@ -3,13 +3,22 @@ import Stack from '@mui/material/Stack';
 import { Skeleton } from '@mui/material';
 
 const SkeletonLoader = () => {
-  return (
-    <Stack>
-      <Skeleton variant="rectangular" width={210} height={250} />
-      <Skeleton height={50} variant="text" />
-      <Skeleton variant="text" width={60} height={40} />
-    </Stack>
-  );
+  const skeleton = [1, 2, 3, 4, 5, 6];
+
+  return skeleton.map((index) => {
+    return (
+      <Stack key={index}>
+        <Skeleton
+          animation="wave"
+          variant="text"
+          sx={{ margin: 'auto' }}
+          width={120}
+          height={40}
+        />
+        <Skeleton variant="text" width={150} height={60} />
+      </Stack>
+    );
+  });
 };
 
 export default SkeletonLoader;

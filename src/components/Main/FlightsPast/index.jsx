@@ -1,21 +1,45 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { useGetPastFlightsQuery } from '../../../services/flightsApi';
-import CardPast from './CardPast';
 import SkeletonLoader from '../../Skeleton/SkeletonLoader';
 
 const CardsFlightPast = () => {
   const { data, isLoading } = useGetPastFlightsQuery();
 
-  const dataCard = data?.map((item) => {
-    return isLoading ? (
-      <SkeletonLoader key={item.id} />
-    ) : (
-      <CardPast key={item.id} item={item} />
-    );
-  });
-
-  return <Box>{dataCard}</Box>;
+  return (
+    <Box>
+      {isLoading ? (
+        <SkeletonLoader />
+      ) : (
+        data.map((item) => {
+          return (
+            <Link
+              key={item.id}
+              style={{ textDecoration: 'none' }}
+              to={`info/${item.id}`}
+            >
+              <Card sx={{ width: 220, margin: '10px 0' }}>
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {item.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Details:{' '}
+                    {item.details?.length === undefined ? (
+                      <span>Don`t information</span>
+                    ) : (
+                      item.details?.substring(0, 50)
+                    )}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Link>
+          );
+        })
+      )}
+    </Box>
+  );
 };
 
 export default CardsFlightPast;

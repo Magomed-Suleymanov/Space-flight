@@ -13,41 +13,41 @@ const InduvidualCardInfo = () => {
   const date = newDate.toUTCString();
 
   const Img =
-    data?.links?.patch?.small === null ? (
+    data?.links.patch.small === null ? (
       <ImageNotSupportedIcon color="primary" sx={{ fontSize: '300px' }} />
     ) : (
-      <img
-        style={{ width: '250px' }}
-        src={data?.links?.patch?.small}
-        alt="img"
-      />
+      <img style={{ width: '250px' }} src={data?.links.patch.small} alt="img" />
     );
 
   const details =
     data?.details === null ? <span>Not provided</span> : data?.details;
+
   const flightNumber =
     data?.flight_number === null ? (
       <span>Not provided</span>
     ) : (
       data?.flight_number
     );
+
   const linkWiki =
-    data?.links?.wikipedia === null ? (
+    data?.links.wikipedia === null ? (
       <span>Wikipedia: Not provided</span>
     ) : (
-      <a href={data?.links?.wikipedia}>Wikipedia</a>
+      <a href={data?.links.wikipedia}>Wikipedia</a>
     );
+
   const linkWebcast =
-    data?.links?.webcast === null ? (
+    data?.links.webcast === null ? (
       <span>Webcast: Not provided</span>
     ) : (
-      <a href={data?.links?.webcast}>Webcast</a>
+      <a href={data?.links.webcast}>Webcast</a>
     );
+
   const linkArticle =
-    data?.links?.article === null ? (
+    data?.links.article === null ? (
       <span>Article: Not provided</span>
     ) : (
-      <a href={data?.links?.article}>Article</a>
+      <a href={data?.links.article}>Article</a>
     );
 
   if (isLoading) {

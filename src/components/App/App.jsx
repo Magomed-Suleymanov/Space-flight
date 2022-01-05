@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import MainContent from '../Main';
 import InduvidualCardInfo from '../AdditionalInfo';
+import NotFound from '../NotFound';
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="info/:id" element={<InduvidualCardInfo />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Box>
   );
