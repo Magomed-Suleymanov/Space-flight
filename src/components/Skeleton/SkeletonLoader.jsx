@@ -15,7 +15,12 @@ const SkeletonLoader = () => {
           width={120}
           height={40}
         />
-        <Skeleton variant="text" width={150} height={60} />
+        <Skeleton
+          variant="text"
+          width={150}
+          height={60}
+          sx={{ margin: 'auto' }}
+        />
       </Stack>
     );
   });

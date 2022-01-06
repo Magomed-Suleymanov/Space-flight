@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, CssBaseline } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Container,
+  CssBaseline,
+  Typography,
+} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { useDrag, useDrop } from 'react-dnd';
+import { Link } from 'react-router-dom';
 import CardsFlightPast from './FlightsPast';
 import CardsFlightUpcoming from './FlightsUpcoming';
 import Header from '../Header';
 import { useGetUpcomingFlightsQuery } from '../../services/flightsApi';
 import MyLaunches from './MyLaunches';
+import SkeletonLoader from '../Skeleton/SkeletonLoader';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -18,8 +27,6 @@ const Item = styled(Paper)(({ theme }) => ({
   height: '75vh',
   width: '100%',
   overflowY: 'scroll',
-  display: 'flex',
-  justifyContent: 'center',
 
   '&::-webkit-scrollbar': {
     width: '0.4em',
@@ -51,6 +58,15 @@ const MainContent = () => {
   });
 
   const moveLaunch = (item) => {
+    if (item && item.type === 'launch') {
+      setMyLaunches((_myLaunch) => [..._myLaunch, launches[item.index]]);
+      setLaunches((_launch) => _launch.filter((_, idx) => idx !== item.index));
+    } else {
+      setLaunches((_launch) => [..._launch, myLaunches[item.index]]);
+      setMyLaunches((_myLaunch) =>
+        _myLaunch.filter((_, idx) => idx !== item.index),
+      );
+    }
     console.log(item);
   };
 
@@ -69,18 +85,37 @@ const MainContent = () => {
           <Grid item xs={6} md={3}>
             <h4>LAUNCHES</h4>
             <Item ref={removeMylaunchRef}>
-              <CardsFlightUpcoming
-                data={data}
-                isLoading={isLoading}
-                onDropLaunch={moveLaunch}
-                // type={itemTypes}
-              />
+              {isLoading ? (
+                <SkeletonLoader />
+              ) : (
+                launches?.map((item, index) => {
+                  return (
+                    <CardsFlightUpcoming
+                      key={item.id}
+                      items={item}
+                      index={index}
+                      onDropLaunch={moveLaunch}
+                      launchType="launch"
+                    />
+                  );
+                })
+              )}
             </Item>
           </Grid>
           <Grid item xs={6} md={3}>
             <h4>MY LAUNCHES</h4>
             <Item ref={launchRef}>
-              <MyLaunches onDropLaunch={moveLaunch} />
+              {myLaunches.map((item, index) => {
+                return (
+                  <CardsFlightUpcoming
+                    key={item.id}
+                    items={item}
+                    index={index}
+                    onDropLaunch={moveLaunch}
+                    launchType="myLaunch"
+                  />
+                );
+              })}
             </Item>
           </Grid>
         </Grid>

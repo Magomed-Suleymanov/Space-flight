@@ -19,7 +19,7 @@ const CardsFlightPast = () => {
               style={{ textDecoration: 'none' }}
               to={`info/${item.id}`}
             >
-              <Card sx={{ width: 220, margin: '10px 0' }}>
+              <Card sx={{ width: 220, margin: '10px auto' }}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {item.name}
