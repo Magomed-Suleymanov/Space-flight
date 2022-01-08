@@ -1,19 +1,16 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import MainContent from '../Main';
-import InduvidualCardInfo from '../AdditionalInfo';
-import NotFound from '../NotFound';
+import IndividualCardInfo from '../AdditionalInfo/IndividualCardInfo';
+import NotFound from '../NotFound/NotFound';
 
 const App = () => {
   return (
-    <Box>
-      <Routes>
-        <Route path="/" element={<MainContent />} />
-        <Route path="info/:id" element={<InduvidualCardInfo />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Box>
+    <Routes>
+      <Route path="/" element={<MainContent />} />
+      <Route path="info/:id" element={<IndividualCardInfo />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

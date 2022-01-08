@@ -3,10 +3,18 @@ import { Box, Button } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import { useGetFlightByIdQuery } from '../../services/flightsApi';
+import {
+  boxWrapStyle,
+  detailsStyle,
+  imgNotStyle,
+  imgStyle,
+  loadingStyle,
+  wrapDetailsStyle,
+} from './styleAdditional';
+import { linkStyle } from '../Main/styleMain';
 
-const InduvidualCardInfo = () => {
+const IndividualCardInfo = () => {
   const { id } = useParams();
-
   const { data, isLoading } = useGetFlightByIdQuery(id);
 
   const newDate = new Date(data?.date_utc);
@@ -14,9 +22,9 @@ const InduvidualCardInfo = () => {
 
   const Img =
     data?.links.patch.small === null ? (
-      <ImageNotSupportedIcon color="primary" sx={{ fontSize: '300px' }} />
+      <ImageNotSupportedIcon color="primary" sx={imgNotStyle} />
     ) : (
-      <img style={{ width: '250px' }} src={data?.links.patch.small} alt="img" />
+      <img style={imgStyle} src={data?.links.patch.small} alt="img" />
     );
 
   const details =
@@ -52,40 +60,18 @@ const InduvidualCardInfo = () => {
 
   if (isLoading) {
     return (
-      <h1
-        style={{ widht: '50px', position: 'absolute', left: '45%', top: '40%' }}
-      >
-        loading
-      </h1>
+      <Box style={loadingStyle}>
+        <h1>Loading</h1>
+      </Box>
     );
   }
 
   return (
-    <Box
-      sx={{
-        width: 700,
-        minHeight: 400,
-        position: 'absolute',
-        top: '30%',
-        left: 'calc(50% - 350px)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        border: '1px solid lightgray',
-        borderRadius: '5px',
-        boxShadow: '0px 0px 10px rgba(0, 0, 0)',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-        }}
-      >
-        {Img}
-      </Box>
-      <Box sx={{ width: '380px' }}>
+    <Box sx={boxWrapStyle}>
+      <Box sx={imgStyle}>{Img}</Box>
+      <Box sx={wrapDetailsStyle}>
         <h1>{data.name}</h1>
-        <Box sx={{ fontSize: 20, marginBottom: '15px' }}>
+        <Box sx={detailsStyle}>
           <Box>Flight Number: {flightNumber}</Box>
           <Box>Details: {details}</Box>
           <Box>Date: {date}</Box>
@@ -93,7 +79,7 @@ const InduvidualCardInfo = () => {
           <Box>{linkWebcast}</Box>
           <Box>{linkArticle}</Box>
         </Box>
-        <Link style={{ textDecoration: 'none' }} to="/">
+        <Link style={linkStyle} to="/">
           <Button variant="outlined" size="medium">
             Back
           </Button>
@@ -103,4 +89,4 @@ const InduvidualCardInfo = () => {
   );
 };
 
-export default InduvidualCardInfo;
+export default IndividualCardInfo;

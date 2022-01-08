@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Card,
-  CardContent,
-  Container,
-  CssBaseline,
-  Typography,
-} from '@mui/material';
+import { Box, Container, CssBaseline } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import { useDrag, useDrop } from 'react-dnd';
-import { Link } from 'react-router-dom';
-import CardsFlightPast from './FlightsPast';
-import CardsFlightUpcoming from './FlightsUpcoming';
-import Header from '../Header';
+import { useDrop } from 'react-dnd';
+import CardsFlightPast from './FlightsPast/CardsFlightPast';
+import Header from '../Header/Header';
 import { useGetUpcomingFlightsQuery } from '../../services/flightsApi';
-import MyLaunches from './MyLaunches';
 import SkeletonLoader from '../Skeleton/SkeletonLoader';
+import Notification from '../Notification/Notification';
+import { contStyle } from './styleMain';
+import CardsFlightUpcoming from './FlightsUpcoming/CardsFlightUpcoming';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -38,19 +31,20 @@ const MainContent = () => {
 
   const [launches, setLaunches] = useState();
   const [myLaunches, setMyLaunches] = useState([]);
+  const [activeNotification, setActiveNotification] = useState(false);
 
   useEffect(() => {
     setLaunches(data);
   }, [data]);
 
-  const [{ isOver }, launchRef] = useDrop({
+  const [, launchRef] = useDrop({
     accept: 'launch',
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   });
 
-  const [{ isOver: isLaunchOver }, removeMylaunchRef] = useDrop({
+  const [, removeMylaunchRef] = useDrop({
     accept: 'myLaunch',
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -61,21 +55,26 @@ const MainContent = () => {
     if (item && item.type === 'launch') {
       setMyLaunches((_myLaunch) => [..._myLaunch, launches[item.index]]);
       setLaunches((_launch) => _launch.filter((_, idx) => idx !== item.index));
+      setActiveNotification(true);
+      setTimeout(() => {
+        setActiveNotification(false);
+      }, 800);
     } else {
+      setActiveNotification(false);
       setLaunches((_launch) => [..._launch, myLaunches[item.index]]);
       setMyLaunches((_myLaunch) =>
         _myLaunch.filter((_, idx) => idx !== item.index),
       );
     }
-    console.log(item);
   };
 
   return (
     <Box>
       <CssBaseline />
-      <Container sx={{ textAlign: 'center' }} maxWidth="xl">
+      <Container sx={contStyle} maxWidth="xl">
         <Header />
         <Grid container justifyContent="center" spacing={2}>
+          {activeNotification && <Notification />}
           <Grid item xs={6} md={3}>
             <h4>PAST LAUNCHES</h4>
             <Item>
@@ -105,7 +104,7 @@ const MainContent = () => {
           <Grid item xs={6} md={3}>
             <h4>MY LAUNCHES</h4>
             <Item ref={launchRef}>
-              {myLaunches.map((item, index) => {
+              {myLaunches?.map((item, index) => {
                 return (
                   <CardsFlightUpcoming
                     key={item.id}

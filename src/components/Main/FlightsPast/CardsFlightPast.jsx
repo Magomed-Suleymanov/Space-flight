@@ -3,6 +3,7 @@ import { Box, Card, CardContent, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useGetPastFlightsQuery } from '../../../services/flightsApi';
 import SkeletonLoader from '../../Skeleton/SkeletonLoader';
+import { cardStyle, linkStyle } from '../styleMain';
 
 const CardsFlightPast = () => {
   const { data, isLoading } = useGetPastFlightsQuery();
@@ -14,12 +15,8 @@ const CardsFlightPast = () => {
       ) : (
         data.map((item) => {
           return (
-            <Link
-              key={item.id}
-              style={{ textDecoration: 'none' }}
-              to={`info/${item.id}`}
-            >
-              <Card sx={{ width: 220, margin: '10px auto' }}>
+            <Link key={item.id} style={linkStyle} to={`info/${item.id}`}>
+              <Card sx={cardStyle}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {item.name}

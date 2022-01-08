@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Card, CardContent, Typography } from '@mui/material';
-import { useDrag, useDrop } from 'react-dnd';
+import { Card, CardContent, Typography } from '@mui/material';
+import { useDrag } from 'react-dnd';
 import { Link } from 'react-router-dom';
+import { cardStyle, linkStyle } from '../styleMain';
 
 const CardsFlightUpcoming = ({ items, index, onDropLaunch, launchType }) => {
-  const [{ isDragging }, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     item: {
       type: launchType,
       index,
@@ -22,8 +23,8 @@ const CardsFlightUpcoming = ({ items, index, onDropLaunch, launchType }) => {
   });
 
   return (
-    <Link style={{ textDecoration: 'none' }} to={`info/${items.id}`}>
-      <Card ref={dragRef} sx={{ width: 220, margin: '10px auto' }}>
+    <Link style={linkStyle} to={`info/${items.id}`}>
+      <Card ref={dragRef} sx={cardStyle}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {items.name}
